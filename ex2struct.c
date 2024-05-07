@@ -13,6 +13,7 @@ typedef struct _funcionario{
     float salario;
 }Funcionario;
 
+//cria funcionario na memoria
 Funcionario *create(char nome, char cargo, int idade, double salario){
     Funcionario *a = calloc(1, sizeof(Funcionario));
     if (a == NULL) {
@@ -25,7 +26,40 @@ Funcionario *create(char nome, char cargo, int idade, double salario){
     a-> salario = salario;
 return a;
 }
+//destroi funcionario da memoria
+void desalocarFuncionario(Funcionario **funcionario_ref){
+    Funcionario *a = *funcionario_ref;
+    free(a);
+    *aluno_ref =NULL;
+}
 
+//aumenta o salario
+void aumentarSalario(Funcionario *funcionario, float aumento){
+    funcionario->salario += aumento;
+} 
+//imprime funcionario no console
+void infoFuncionario(Funcionario*funcionario){
+    printf("Nome: %s\n", funcionario->nome);
+    printf("Idade: %d\n", funcionario->idade);
+    printf("Cargo: %s\n", funcionario->cargo);
+    printf("Salário: %2f\n", funcionario->salario);
+    puts("\n");
+}
+//criar funcionario
+Funcionario *func1 = create("Maria", "Desenvolvedor", 30, 5000.0);
+Funcionario *func2 = create("Eduarda", "Junior", 10, 1000.0);
+//exibir detalhe dos funcionarios
+printf("Detalhe dos funcionarios:\n");
+infoFuncionario(func1);
+infoFuncionario(func2);
+//aumentarSalario
+aumentarSalario(func1, 1000.0);
+//exibir detalhes dos funcionario atualizado
+printf("Novo salário do funcionário:\n");
+infoFuncionario(func1);
 
-
-
+//liberar a memoria alocada p funcionarios
+desalocarFuncionario(&func1);
+desalocarFuncionario(&func2);
+return 0;
+}
