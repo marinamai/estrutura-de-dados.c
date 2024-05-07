@@ -45,21 +45,22 @@ void infoFuncionario(Funcionario*funcionario){
     printf("Salário: %2f\n", funcionario->salario);
     puts("\n");
 }
+int main(){
 //criar funcionario
-Funcionario *func1 = create("Maria", "Desenvolvedor", 30, 5000.0);
-Funcionario *func2 = create("Eduarda", "Junior", 10, 1000.0);
+    Funcionario *func1 = create("Maria", "Desenvolvedor", 30, 5000.0);
+    Funcionario *func2 = create("Eduarda", "Junior", 10, 1000.0);
 //exibir detalhe dos funcionarios
-printf("Detalhe dos funcionarios:\n");
-infoFuncionario(func1);
-infoFuncionario(func2);
+    printf("Detalhe dos funcionarios:\n");
+    infoFuncionario(func1);
+    infoFuncionario(func2);
 //aumentarSalario
-aumentarSalario(func1, 1000.0);
+    aumentarSalario(func1, 1000.0);
 //exibir detalhes dos funcionario atualizado
-printf("Novo salário do funcionário:\n");
-infoFuncionario(func1);
+    printf("Novo salário do funcionário:\n");
+    infoFuncionario(func1);
 
 //liberar a memoria alocada p funcionarios
-desalocarFuncionario(&func1);
-desalocarFuncionario(&func2);
+    desalocarFuncionario(&func1);
+    desalocarFuncionario(&func2);
 return 0;
 }
