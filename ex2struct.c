@@ -5,62 +5,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#define MAX_CHAR 100
+// definição da struct
 typedef struct _funcionario{
-    char nome[50]; 
-    char cargo[50];
-    int idade;
-    float salario;
+char nome[MAX_CHAR];
+int idade;
+char cargo[MAX_CHAR];
+float salário;
 }Funcionario;
-
-//cria funcionario na memoria
-Funcionario *create(char nome, char cargo, int idade, double salario){
-    Funcionario *a = calloc(1, sizeof(Funcionario));
-    if (a == NULL) {
-        puts(" Erro ao localizar memoria do funcionario.\n");
-        exit(EXIT_FAILURE);
-    }
-    strcpy(a->nome,nome);
-    a-> cargo = cargo;
-    a-> idade = idade;
-    a-> salario = salario;
-return a;
+Funcionario *createFuncionario(char *nome, int idade, char *cargo, float
+salario){
+Funcionario *funcionario = calloc(1, sizeof(Funcionario));
+strcpy(funcionario->nome, nome);
+funcionario->idade = idade;
+funcionario->salário = salario;
+strcpy(funcionario->cargo, cargo);
+return funcionario;
 }
-//destroi funcionario da memoria
-void desalocarFuncionario(Funcionario **funcionario_ref){
-    Funcionario *a = *funcionario_ref;
-    free(a);
-    *aluno_ref =NULL;
+void deselocaFuncionario(Funcionario **funcionario_ref){
+Funcionario *funcionario = *funcionario_ref;
+free(funcionario);
+funcionario_ref = NULL;
 }
-
-//aumenta o salario
-void aumentarSalario(Funcionario *funcionario, float aumento){
-    funcionario->salario += aumento;
-} 
-//imprime funcionario no console
-void infoFuncionario(Funcionario*funcionario){
-    printf("Nome: %s\n", funcionario->nome);
-    printf("Idade: %d\n", funcionario->idade);
-    printf("Cargo: %s\n", funcionario->cargo);
-    printf("Salário: %2f\n", funcionario->salario);
-    puts("\n");
+float aumentarSalario(Funcionario *funcionario){
+funcionario->salário += funcionario->salário * 0.5;
+return funcionario->salário;
 }
-int main(){
-//criar funcionario
-    Funcionario *func1 = create("Maria", "Desenvolvedor", 30, 5000.0);
-    Funcionario *func2 = create("Eduarda", "Junior", 10, 1000.0);
-//exibir detalhe dos funcionarios
-    printf("Detalhe dos funcionarios:\n");
-    infoFuncionario(func1);
-    infoFuncionario(func2);
-//aumentarSalario
-    aumentarSalario(func1, 1000.0);
-//exibir detalhes dos funcionario atualizado
-    printf("Novo salário do funcionário:\n");
-    infoFuncionario(func1);
-
-//liberar a memoria alocada p funcionarios
-    desalocarFuncionario(&func1);
-    desalocarFuncionario(&func2);
+void infoFuncionario(Funcionario **funcionarios, int qntFuncionarios){
+puts("Lista de funcionarios");
+for (int i = 0 ; i < qntFuncionarios; i++) {
+printf("Nome: %s\n", funcionarios[i]->nome);
+printf("Idade: %d\n", funcionarios[i]->idade);
+printf("Gargo: %s\n", funcionarios[i]->cargo);
+printf("Salario: %.2f\n", funcionarios[i]->salário);
+puts("#######################");
+}
+}
+//executa o programa
+int main(int argc, const char * argv[]) {
+Funcionario *f1 = createFuncionario("Paul", 34, "Mobile Dev", 10000);
+Funcionario *f2 = createFuncionario("Macneil", 28, "Web Full Stack Dev",
+3000);
+aumentarSalario(f2);
+Funcionario *funcionarios[] = {f1,f2};
+int qntFuncionarios = sizeof(funcionarios) / sizeof(funcionarios[0]);
+infoFuncionario(funcionarios, qntFuncionarios);
+deselocaFuncionario(&f1);
+deselocaFuncionario(&f2);
 return 0;
 }
